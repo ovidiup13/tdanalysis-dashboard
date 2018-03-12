@@ -4,11 +4,12 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "yarn run config-dev && ng serve --environment=dev",
     "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "config-dev": "ts-node ./scripts/set-env.ts --environment=dev"
   },
   "private": true,
   "dependencies": {
