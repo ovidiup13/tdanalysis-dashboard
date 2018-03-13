@@ -8,7 +8,8 @@ import { Repository } from "../models/repository.interface";
 // env
 import { environment } from "../../environments/environment.dev";
 import { Issue } from "../models/issue.interface";
-import { Commit } from "../models/commit.interface";
+import { Commit, CommitMap } from "../models/commit.interface";
+import { Stats } from "../models/stats.interface";
 
 @Injectable()
 export class DataService {
@@ -70,6 +71,26 @@ export class DataService {
   getCommitsByIssue(repoId: string, issueId: string) {
     return this.http.get<Commit[]>(
       `${DataService.API}/repos/${repoId}/issues/${issueId}/commits`
+    );
+  }
+
+  /**
+   * Returns an object of all issues and their associated commits.
+   * @param repoId
+   */
+  getCommitsByIssues(repoId: string): Observable<CommitMap[]> {
+    return this.http.get<CommitMap[]>(
+      `${DataService.API}/repos/${repoId}/issue-commits`
+    );
+  }
+
+  /**
+   * Returns simple stats for a specific repository.
+   * @param repoId
+   */
+  getSimpleStats(repoId: string): Observable<Stats[]> {
+    return this.http.get<Stats[]>(
+      `${DataService.API}/repos/${repoId}/stats/simple`
     );
   }
 }

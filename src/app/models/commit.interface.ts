@@ -17,3 +17,7 @@ export interface Commit {
   };
   bugs?: String[];
 }
+
+export interface CommitMap {
+  [key: string]: Commit[];
+}
