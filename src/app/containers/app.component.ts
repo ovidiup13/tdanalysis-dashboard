@@ -20,7 +20,7 @@ import { Stats } from "../models/stats.interface";
   styleUrls: ["./app.component.css"],
   template: `
     <div>
-      <app-repository-dashboard></app-repository-dashboard>
+      <router-outlet></router-outlet>
     </div>
   `
 })

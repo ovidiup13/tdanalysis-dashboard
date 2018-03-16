@@ -23,9 +23,19 @@ const routes: Routes = [
     pathMatch: "full" // match empty string
   },
   {
-    path: "repositories/:id",
-    component: RepositoryViewerComponent
+    path: "repositories",
+    children: [
+      {
+        path: "",
+        component: RepositoryDashboardComponent
+      },
+      {
+        path: ":id",
+        component: RepositoryViewerComponent
+      }
+    ]
   },
+
   {
     path: "**", // any routes that do not exist in the application
     component: NotFoundComponent

@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { Repository } from "../../models/repository.interface";
 import { Observable } from "rxjs/Observable";
 import { DataService } from "../../services/data-service.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-repository-dashboard",
@@ -11,9 +12,13 @@ import { DataService } from "../../services/data-service.service";
 export class RepositoryDashboardComponent implements OnInit {
   repositories$: Observable<Repository[]>;
 
-  constructor(private dataService: DataService) {}
+  constructor(private router: Router, private dataService: DataService) {}
 
   ngOnInit() {
     this.repositories$ = this.dataService.getRepositories();
+  }
+
+  viewRepository(event: Repository) {
+    this.router.navigate([`/repositories`, event.id]);
   }
 }

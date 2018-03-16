@@ -14,4 +14,8 @@ export class RepositoryDetailComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {}
+
+  viewRepository() {
+    this.view.emit(this.repository);
+  }
 }
