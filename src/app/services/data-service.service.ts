@@ -21,6 +21,14 @@ export class DataService {
    * Returns metadata about the repository.
    * @param id of the repository
    */
+  getRepositories(): Observable<Repository[]> {
+    return this.http.get<Repository[]>(`${DataService.API}/repos`);
+  }
+
+  /**
+   * Returns metadata about the repository.
+   * @param id of the repository
+   */
   getRepository(id: string): Observable<Repository> {
     return this.http.get<Repository>(`${DataService.API}/repos/${id}`);
   }
