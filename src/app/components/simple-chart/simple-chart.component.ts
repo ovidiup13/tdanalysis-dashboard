@@ -55,9 +55,9 @@ export class SimpleChartComponent implements OnInit, OnChanges {
     console.log("Std of technical debt: ", td_std);
 
     //68–95–99.7 rule
-    return result
-      .filter(item => item.x < we_mean + we_std)
-      .filter(item => item.y < td_mean + td_std);
+    return result;
+    // .filter(item => item.x < we_mean + we_std)
+    // .filter(item => item.y < td_mean + td_std);
   }
 
   createChart(data: any) {
