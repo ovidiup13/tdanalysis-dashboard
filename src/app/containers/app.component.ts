@@ -17,22 +17,13 @@ import { Stats } from "../models/stats.interface";
 
 @Component({
   selector: "app-root",
-  templateUrl: "./app.component.html",
-  styleUrls: ["./app.component.css"]
+  styleUrls: ["./app.component.css"],
+  template: `
+    <div>
+      <app-repository-dashboard></app-repository-dashboard>
+    </div>
+  `
 })
-export class AppComponent implements OnInit {
-  private static repoId: string = "3";
-  private static issueKey: string = "104";
-  private static commitSha: string = "c7a175fbfa5b171ac02423ab2c92f279a6f9de0c";
-
-  data$: Observable<Stats[]>;
-
-  constructor(private dataService: DataService) {}
-
-  ngOnInit(): void {
-    this.dataService
-      .getRepository(AppComponent.repoId)
-      .subscribe(repo => console.log(repo));
-    this.data$ = this.dataService.getSimpleStats(AppComponent.repoId);
-  }
+export class AppComponent {
+  constructor() {}
 }

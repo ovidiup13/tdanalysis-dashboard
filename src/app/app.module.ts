@@ -7,11 +7,17 @@ import { AppComponent } from "./containers/app.component";
 
 // services
 import { DataService } from "./services/data-service.service";
-import { SimpleChartComponent } from './components/simple-chart/simple-chart.component';
-import { RepositoryDashboardComponent } from './containers/repository-dashboard/repository-dashboard.component';
+import { SimpleChartComponent } from "./components/simple-chart/simple-chart.component";
+import { RepositoryDashboardComponent } from "./containers/repository-dashboard/repository-dashboard.component";
+import { RepositoryDetailComponent } from "./components/repository-detail/repository-detail.component";
 
 @NgModule({
-  declarations: [AppComponent, SimpleChartComponent, RepositoryDashboardComponent],
+  declarations: [
+    AppComponent,
+    SimpleChartComponent,
+    RepositoryDashboardComponent,
+    RepositoryDetailComponent
+  ],
   imports: [BrowserModule, HttpClientModule],
   providers: [DataService],
   bootstrap: [AppComponent]
