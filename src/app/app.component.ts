@@ -7,6 +7,7 @@ import { forkJoin } from "rxjs/observable/forkJoin";
   selector: "app-root",
   template: `
     <div>
+      <app-nav></app-nav>
       <router-outlet></router-outlet>
     </div>
   `

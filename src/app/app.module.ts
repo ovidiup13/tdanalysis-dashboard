@@ -9,11 +9,13 @@ import { AppComponent } from "./app.component";
 
 // custom modules
 import { StatsModule } from "./stats/stats.module";
+import { HomeComponent } from "./home.component";
+import { NavComponent } from './nav/nav.component';
 
 const routes: Routes = [
   {
     path: "",
-    component: AppComponent,
+    component: HomeComponent,
     pathMatch: "full" // match empty string
   },
   {
@@ -23,7 +25,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [AppComponent, NotFoundComponent],
+  declarations: [AppComponent, NotFoundComponent, HomeComponent, NavComponent],
   imports: [
     BrowserModule,
     HttpClientModule,
