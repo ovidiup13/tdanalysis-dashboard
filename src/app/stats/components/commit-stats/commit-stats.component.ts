@@ -12,6 +12,12 @@ import { CommitStats } from "../../models/stats.interface";
   selector: "app-commit-stats",
   template: `
     <div>
+      <div>
+        <h6><b>{{data?.totalCommits}}</b> commits</h6>
+        <h6><b>{{data?.numberOfAuthors}}</b> collaborators</h6>
+        <h6><b>{{data?.meanTicketsPerCommit | number:'1.1-3'}}</b> tickets referenced per commit</h6>
+        <h6><b>{{data?.meanTDItemsPerCommit | number:'1.1-3'}}</b> TD items per commit</h6>
+      </div>
       <app-bar-chart [data]="dataset" [options]="chartOptions"></app-bar-chart>
     </div>
   `,

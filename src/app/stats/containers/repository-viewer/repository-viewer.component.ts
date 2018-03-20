@@ -4,6 +4,7 @@ import { DataService } from "../../services/data-service.service";
 import { Observable } from "rxjs/Observable";
 import { IssueStats, CommitStats } from "../../models/stats.interface";
 import { switchMap } from "rxjs/operators";
+import { Repository } from "../../models/repository.interface";
 
 @Component({
   selector: "app-repository-viewer",
@@ -26,6 +27,7 @@ import { switchMap } from "rxjs/operators";
 export class RepositoryViewerComponent implements OnInit {
   workEffortData$: Observable<IssueStats[]>;
   commitStats$: Observable<CommitStats>;
+  repository$: Observable<Repository>;
 
   constructor(
     private router: Router,
@@ -35,6 +37,7 @@ export class RepositoryViewerComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
+      this.repository$ = this.dataService.getRepository(params.id);
       this.workEffortData$ = this.dataService.getTicketStats(params.id);
       this.commitStats$ = this.dataService.getCommitStats(params.id);
     });
