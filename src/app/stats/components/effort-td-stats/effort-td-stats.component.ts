@@ -14,8 +14,11 @@ import { Stats } from "../../models/stats.interface";
 
 @Component({
   selector: "app-effort-td-stats",
-  templateUrl: "./effort-td-stats.component.html",
-  styleUrls: ["./effort-td-stats.component.css"]
+  template: `
+  <div>
+    <canvas class="chart" width="800" height="400" #chart></canvas>
+  </div>
+  `
 })
 export class EffortTdStatsComponent implements OnInit, OnChanges {
   @ViewChild("chart") chart: ElementRef;
@@ -55,9 +58,9 @@ export class EffortTdStatsComponent implements OnInit, OnChanges {
     console.log("Std of technical debt: ", td_std);
 
     //68–95–99.7 rule
-    return result;
-    // .filter(item => item.x < we_mean + we_std)
-    // .filter(item => item.y < td_mean + td_std);
+    return result
+      .filter(item => item.x < we_mean + we_std)
+      .filter(item => item.y < td_mean + td_std);
   }
 
   createChart(data: any) {

@@ -12,6 +12,7 @@ import { DataService } from "./services/data-service.service";
 import { RepositoryDashboardComponent } from "./containers/repository-dashboard/repository-dashboard.component";
 import { RepositoryViewerComponent } from "./containers/repository-viewer/repository-viewer.component";
 import { RouterModule, Routes } from "@angular/router";
+import { ChartsModule } from "../charts/charts.module";
 
 const routes: Routes = [
   {
@@ -30,7 +31,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [CommonModule, RouterModule.forChild(routes)],
+  imports: [CommonModule, RouterModule.forChild(routes), ChartsModule],
   declarations: [
     RepositoryDashboardComponent,
     RepositoryViewerComponent,
