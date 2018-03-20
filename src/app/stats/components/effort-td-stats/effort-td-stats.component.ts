@@ -10,7 +10,7 @@ import {
 } from "@angular/core";
 
 import * as Chart from "chart.js";
-import { Stats } from "../../models/stats.interface";
+import { IssueStats } from "../../models/stats.interface";
 
 @Component({
   selector: "app-effort-td-stats",
@@ -23,7 +23,7 @@ import { Stats } from "../../models/stats.interface";
 export class EffortTdStatsComponent implements OnInit, OnChanges {
   @ViewChild("chart") chart: ElementRef;
 
-  @Input() data: Stats[];
+  @Input() data: IssueStats[];
 
   constructor() {}
 
@@ -37,8 +37,8 @@ export class EffortTdStatsComponent implements OnInit, OnChanges {
     }
   }
 
-  processData(data: Stats[]) {
-    const result = data.map((stat: Stats) => {
+  processData(data: IssueStats[]) {
+    const result = data.map((stat: IssueStats) => {
       return {
         x: stat.workEffort,
         y: stat.technicalDebt
