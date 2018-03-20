@@ -6,7 +6,7 @@ import { Observable } from "rxjs/Observable";
 import { Repository } from "../models/repository.interface";
 
 // env
-import { environment } from "../../environments/environment.dev";
+import { environment } from "../../../environments/environment.dev";
 import { Issue } from "../models/issue.interface";
 import { Commit, CommitMap } from "../models/commit.interface";
 import { Stats } from "../models/stats.interface";

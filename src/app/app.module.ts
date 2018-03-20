@@ -4,17 +4,11 @@ import { HttpClientModule } from "@angular/common/http";
 import { RouterModule, Routes } from "@angular/router";
 
 // components
-import { AppComponent } from "./containers/app.component";
 import { NotFoundComponent } from "./not-found.component";
-import { SimpleChartComponent } from "./components/simple-chart/simple-chart.component";
-import { RepositoryDetailComponent } from "./components/repository-detail/repository-detail.component";
+import { AppComponent } from "./app.component";
 
-// services
-import { DataService } from "./services/data-service.service";
-
-// containers
-import { RepositoryDashboardComponent } from "./containers/repository-dashboard/repository-dashboard.component";
-import { RepositoryViewerComponent } from "./containers/repository-viewer/repository-viewer.component";
+// custom modules
+import { StatsModule } from "./stats/stats.module";
 
 const routes: Routes = [
   {
@@ -23,36 +17,19 @@ const routes: Routes = [
     pathMatch: "full" // match empty string
   },
   {
-    path: "repositories",
-    children: [
-      {
-        path: "",
-        component: RepositoryDashboardComponent
-      },
-      {
-        path: ":id",
-        component: RepositoryViewerComponent
-      }
-    ]
-  },
-
-  {
     path: "**", // any routes that do not exist in the application
     component: NotFoundComponent
   }
 ];
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    NotFoundComponent,
-    SimpleChartComponent,
-    RepositoryDashboardComponent,
-    RepositoryDetailComponent,
-    RepositoryViewerComponent
+  declarations: [AppComponent, NotFoundComponent],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    RouterModule.forRoot(routes),
+    StatsModule
   ],
-  imports: [BrowserModule, HttpClientModule, RouterModule.forRoot(routes)],
-  providers: [DataService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
