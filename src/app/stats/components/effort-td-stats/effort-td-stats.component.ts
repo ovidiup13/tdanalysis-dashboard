@@ -13,11 +13,11 @@ import * as Chart from "chart.js";
 import { Stats } from "../../models/stats.interface";
 
 @Component({
-  selector: "app-simple-chart",
-  templateUrl: "./simple-chart.component.html",
-  styleUrls: ["./simple-chart.component.css"]
+  selector: "app-effort-td-stats",
+  templateUrl: "./effort-td-stats.component.html",
+  styleUrls: ["./effort-td-stats.component.css"]
 })
-export class SimpleChartComponent implements OnInit, OnChanges {
+export class EffortTdStatsComponent implements OnInit, OnChanges {
   @ViewChild("chart") chart: ElementRef;
 
   @Input() data: Stats[];

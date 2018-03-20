@@ -2,7 +2,7 @@ import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 
 // components
-import { SimpleChartComponent } from "./components/simple-chart/simple-chart.component";
+import { EffortTdStatsComponent } from "./components/effort-td-stats/effort-td-stats.component";
 import { RepositoryDetailComponent } from "./components/repository-detail/repository-detail.component";
 
 // services
@@ -35,7 +35,7 @@ const routes: Routes = [
     RepositoryDashboardComponent,
     RepositoryViewerComponent,
     RepositoryDetailComponent,
-    SimpleChartComponent
+    EffortTdStatsComponent
   ],
   providers: [DataService]
 })
