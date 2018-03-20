@@ -96,9 +96,9 @@ export class DataService {
    * Returns simple stats for a specific repository.
    * @param repoId
    */
-  getSimpleStats(repoId: string): Observable<Stats[]> {
+  getTicketStats(repoId: string): Observable<Stats[]> {
     return this.http.get<Stats[]>(
-      `${DataService.API}/repos/${repoId}/stats/simple`
+      `${DataService.API}/repos/${repoId}/stats/tickets`
     );
   }
 }

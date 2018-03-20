@@ -23,7 +23,7 @@ export class RepositoryViewerComponent implements OnInit {
     this.route.params
       .pipe(
         switchMap((data: Params) => {
-          return this.dataService.getSimpleStats(data.id);
+          return this.dataService.getTicketStats(data.id);
         })
       )
       .subscribe((data: Stats[]) => {
