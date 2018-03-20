@@ -2,16 +2,30 @@ import { Component, OnInit } from "@angular/core";
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { DataService } from "../../services/data-service.service";
 import { Observable } from "rxjs/Observable";
-import { IssueStats } from "../../models/stats.interface";
+import { IssueStats, CommitStats } from "../../models/stats.interface";
 import { switchMap } from "rxjs/operators";
 
 @Component({
   selector: "app-repository-viewer",
-  templateUrl: "./repository-viewer.component.html",
+  template: `
+  <div class="page">
+    <h1 class="title">Repository Stats</h1>
+    <div>
+      <h3 class="title">Commit Stats</h3>
+      <app-commit-stats class="chart" [data]="commitStats$ | async"></app-commit-stats>
+    </div>
+
+    <div>
+      <h3 class="title">Work Effort - Technical Debt</h3>
+      <app-effort-td-stats class="chart" [data]="workEffortData$ | async"></app-effort-td-stats>
+    </div>
+  </div>
+  `,
   styleUrls: ["./repository-viewer.component.css"]
 })
 export class RepositoryViewerComponent implements OnInit {
-  workEffortData: IssueStats[];
+  workEffortData$: Observable<IssueStats[]>;
+  commitStats$: Observable<CommitStats>;
 
   constructor(
     private router: Router,
@@ -20,14 +34,9 @@ export class RepositoryViewerComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.route.params
-      .pipe(
-        switchMap((data: Params) => {
-          return this.dataService.getTicketStats(data.id);
-        })
-      )
-      .subscribe((data: IssueStats[]) => {
-        this.workEffortData = data;
-      });
+    this.route.params.subscribe((params: Params) => {
+      this.workEffortData$ = this.dataService.getTicketStats(params.id);
+      this.commitStats$ = this.dataService.getCommitStats(params.id);
+    });
   }
 }

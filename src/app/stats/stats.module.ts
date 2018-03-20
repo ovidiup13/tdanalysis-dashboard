@@ -13,6 +13,7 @@ import { RepositoryDashboardComponent } from "./containers/repository-dashboard/
 import { RepositoryViewerComponent } from "./containers/repository-viewer/repository-viewer.component";
 import { RouterModule, Routes } from "@angular/router";
 import { ChartsModule } from "../charts/charts.module";
+import { CommitStatsComponent } from './components/commit-stats/commit-stats.component';
 
 const routes: Routes = [
   {
@@ -36,7 +37,8 @@ const routes: Routes = [
     RepositoryDashboardComponent,
     RepositoryViewerComponent,
     RepositoryDetailComponent,
-    EffortTdStatsComponent
+    EffortTdStatsComponent,
+    CommitStatsComponent
   ],
   providers: [DataService]
 })

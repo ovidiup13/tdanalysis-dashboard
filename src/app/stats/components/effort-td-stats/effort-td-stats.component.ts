@@ -73,12 +73,13 @@ export class EffortTdStatsComponent implements OnInit, OnChanges {
         datasets: [
           {
             label: "Work Effort - Technical Debt Scatter",
-            data: data
+            data: data,
+            backgroundColor: "#f48942"
           }
         ]
       },
       options: {
-        responsive: false,
+        responsive: true,
         display: true,
         scales: {
           xAxes: [

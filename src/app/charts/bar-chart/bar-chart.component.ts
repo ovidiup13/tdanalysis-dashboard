@@ -31,29 +31,33 @@ export class BarChartComponent implements OnChanges, AfterViewInit {
   constructor() {}
 
   ngAfterViewInit(): void {
+    this.initChart();
+  }
+
+  initChart() {
     const canvas: HTMLCanvasElement = this.chart.nativeElement;
     const ctx: CanvasRenderingContext2D = canvas.getContext("2d");
     this.barChart = new Chart(ctx, {
       type: "bar",
-      data: [],
-      options: {}
+      data: this.data || [],
+      options: this.options || {}
     });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    const newData = changes.data.currentValue;
-    const newOptions = changes.options.currentValue;
+    if (this.barChart == null) {
+      return;
+    } else {
+      console.log("update barchart with changes", changes);
+      if (changes.data != null && changes.data.currentValue != null) {
+        this.barChart.data = changes.data.currentValue;
+        this.barChart.update();
+      }
 
-    if (newOptions != null) {
-      console.log(newOptions);
-      this.barChart.options = newOptions;
-      this.barChart.update();
-    }
-
-    if (newData != null) {
-      console.log(newData);
-      this.barChart.data.datasets = newData;
-      this.barChart.update();
+      if (changes.options != null && changes.options.currentValue != null) {
+        this.barChart.options = changes.options.currentValue;
+        this.barChart.update();
+      }
     }
   }
 }
