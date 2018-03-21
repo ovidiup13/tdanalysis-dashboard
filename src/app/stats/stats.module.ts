@@ -16,6 +16,7 @@ import { ChartsModule } from "../charts/charts.module";
 import { CommitStatsComponent } from "./components/commit-stats/commit-stats.component";
 import { IssueStatsComponent } from "./components/issue-stats/issue-stats.component";
 import { TdStatsComponent } from "./components/td-stats/td-stats.component";
+import { RepoStatsComponent } from './components/repo-stats/repo-stats.component';
 
 const routes: Routes = [
   {
@@ -42,7 +43,8 @@ const routes: Routes = [
     EffortTdStatsComponent,
     CommitStatsComponent,
     IssueStatsComponent,
-    TdStatsComponent
+    TdStatsComponent,
+    RepoStatsComponent
   ],
   providers: [DataService]
 })

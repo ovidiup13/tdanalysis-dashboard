@@ -10,7 +10,13 @@ import { Repository } from "../../models/repository.interface";
   selector: "app-repository-viewer",
   template: `
   <div class="page">
-    <h1 class="title">Repository Stats</h1>
+    <h1 class="title">{{(repository$ | async)?.author + "/" + (repository$ | async)?.name}}</h1>
+
+    <div>
+      <h3 class="title">Repository Stats</h3>
+      <app-repo-stats [repository]="repository$ | async"></app-repo-stats>
+    </div>
+
     <div>
       <h3 class="title">Commit Stats</h3>
       <app-commit-stats class="chart" [data]="commitStats$ | async"></app-commit-stats>
