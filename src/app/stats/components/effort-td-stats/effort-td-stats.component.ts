@@ -11,6 +11,7 @@ import {
 
 import * as Chart from "chart.js";
 import { IssueStats, SimpleStats } from "../../models/stats.interface";
+import { StatsCalculator } from "../../helpers/stats-calculator";
 
 @Component({
   selector: "app-effort-td-stats",
@@ -20,12 +21,7 @@ import { IssueStats, SimpleStats } from "../../models/stats.interface";
       <h4>Work Effort Stats</h4>
       <h6>Mean: <b>{{weStats?.mean | number:'1.1-3'}} hours</b></h6>
       <h6>Standard deviation: <b>{{weStats?.std | number:'1.1-3'}} hours</b></h6>
-    </div>  
-    <div>
-      <h4>Technical Debt Stats</h4>
-      <h6>Mean: <b>{{tdStats?.mean | number:'1.1-3'}} TD items</b></h6>
-      <h6>Standard deviation: <b>{{tdStats?.std | number:'1.1-3'}} TD items</b></h6>
-    </div>  
+    </div>
     <canvas class="chart" width="800" height="400" #chart></canvas>
   </div>
   `
@@ -59,17 +55,17 @@ export class EffortTdStatsComponent implements OnInit, OnChanges {
     });
 
     const we = result.map(i => i.x);
-    const we_mean = this.getMean(we);
+    const we_mean = StatsCalculator.getMean(we);
     this.weStats = {
       mean: we_mean,
-      std: this.getStandardDeviation(we_mean, we)
+      std: StatsCalculator.getStandardDeviation(we_mean, we)
     };
 
     const td = result.map(i => i.y);
-    const td_mean = this.getMean(td);
+    const td_mean = StatsCalculator.getMean(td);
     this.tdStats = {
       mean: td_mean,
-      std: this.getStandardDeviation(td_mean, td)
+      std: StatsCalculator.getStandardDeviation(td_mean, td)
     };
 
     //68–95–99.7 rule
@@ -118,17 +114,5 @@ export class EffortTdStatsComponent implements OnInit, OnChanges {
         }
       }
     });
-  }
-
-  private getMean(data: number[]) {
-    return data.reduce((n1, n2) => n1 + n2, 0) / data.length;
-  }
-
-  private getStandardDeviation(mean: number, data: number[]) {
-    const variance = data.reduce(
-      (previous, current) => Math.pow(mean - current, 2) + previous,
-      0
-    );
-    return Math.sqrt(variance / data.length);
   }
 }

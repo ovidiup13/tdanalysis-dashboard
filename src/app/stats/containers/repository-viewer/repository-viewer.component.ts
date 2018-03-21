@@ -19,7 +19,12 @@ import { Repository } from "../../models/repository.interface";
     <div>
       <h3 class="title">Issue Stats</h3>
       <app-issue-stats class="chart" [issueStats]="issueStats$ | async"></app-issue-stats>
-    </div>    
+    </div>
+    
+    <div>
+      <h3 class="title">Technical Debt Timeline</h3>
+      <app-td-stats class="chart" [data]="issueStats$ | async"></app-td-stats>
+    </div>
 
     <div>
       <h3 class="title">Work Effort - Technical Debt</h3>
