@@ -44,6 +44,10 @@ export class CommitStatsComponent implements OnChanges {
           display: true,
           ticks: {
             beginAtZero: true
+          },
+          scaleLabel: {
+            display: true,
+            labelString: "Number of commits"
           }
         }
       ]
