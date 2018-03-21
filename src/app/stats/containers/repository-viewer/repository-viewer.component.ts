@@ -18,7 +18,7 @@ import { Repository } from "../../models/repository.interface";
 
     <div>
       <h3 class="title">Issue Stats</h3>
-      <app-issue-stats class="chart" [issueStats]="workEffortData$ | async"></app-issue-stats>
+      <app-issue-stats class="chart" [issueStats]="issueStats$ | async"></app-issue-stats>
     </div>    
 
     <div>
@@ -31,6 +31,7 @@ import { Repository } from "../../models/repository.interface";
 })
 export class RepositoryViewerComponent implements OnInit {
   workEffortData$: Observable<IssueStats[]>;
+  issueStats$: Observable<IssueStats[]>;
   commitStats$: Observable<CommitStats>;
   repository$: Observable<Repository>;
 
@@ -44,6 +45,7 @@ export class RepositoryViewerComponent implements OnInit {
     this.route.params.subscribe((params: Params) => {
       this.repository$ = this.dataService.getRepository(params.id);
       this.workEffortData$ = this.dataService.getTicketStats(params.id);
+      this.issueStats$ = this.dataService.getTicketStatsRaw(params.id);
       this.commitStats$ = this.dataService.getCommitStats(params.id);
     });
   }

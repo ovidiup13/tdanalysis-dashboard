@@ -10,12 +10,22 @@ import {
 } from "@angular/core";
 
 import * as Chart from "chart.js";
-import { IssueStats } from "../../models/stats.interface";
+import { IssueStats, SimpleStats } from "../../models/stats.interface";
 
 @Component({
   selector: "app-effort-td-stats",
   template: `
   <div>
+    <div>
+      <h4>Work Effort Stats</h4>
+      <h6>Mean: <b>{{weStats?.mean | number:'1.1-3'}} hours</b></h6>
+      <h6>Standard deviation: <b>{{weStats?.std | number:'1.1-3'}} hours</b></h6>
+    </div>  
+    <div>
+      <h4>Technical Debt Stats</h4>
+      <h6>Mean: <b>{{tdStats?.mean | number:'1.1-3'}} TD items</b></h6>
+      <h6>Standard deviation: <b>{{tdStats?.std | number:'1.1-3'}} TD items</b></h6>
+    </div>  
     <canvas class="chart" width="800" height="400" #chart></canvas>
   </div>
   `
@@ -26,6 +36,9 @@ export class EffortTdStatsComponent implements OnInit, OnChanges {
   @Input() data: IssueStats[];
 
   constructor() {}
+
+  tdStats: SimpleStats;
+  weStats: SimpleStats;
 
   ngOnInit(): void {}
 
@@ -47,20 +60,22 @@ export class EffortTdStatsComponent implements OnInit, OnChanges {
 
     const we = result.map(i => i.x);
     const we_mean = this.getMean(we);
-    const we_std = this.getStandardDeviation(we_mean, we);
-    console.log("Mean of work effort: ", we_mean);
-    console.log("Std of work effort: ", we_std);
+    this.weStats = {
+      mean: we_mean,
+      std: this.getStandardDeviation(we_mean, we)
+    };
 
     const td = result.map(i => i.y);
     const td_mean = this.getMean(td);
-    const td_std = this.getStandardDeviation(td_mean, td);
-    console.log("Mean of technical debt: ", td_mean);
-    console.log("Std of technical debt: ", td_std);
+    this.tdStats = {
+      mean: td_mean,
+      std: this.getStandardDeviation(td_mean, td)
+    };
 
     //68–95–99.7 rule
-    return result
-      .filter(item => item.x < we_mean + we_std)
-      .filter(item => item.y < td_mean + td_std);
+    return result;
+    // .filter(item => item.x < we_mean + we_std)
+    // .filter(item => item.y < td_mean + td_std);
   }
 
   createChart(data: any) {

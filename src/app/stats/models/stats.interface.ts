@@ -14,3 +14,8 @@ export interface CommitStats {
   meanTicketsPerCommit: number;
   meanTDItemsPerCommit: number;
 }
+
+export interface SimpleStats {
+  mean: number;
+  std: number;
+}
