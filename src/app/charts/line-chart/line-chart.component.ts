@@ -12,20 +12,20 @@ import {
 import * as Chart from "chart.js";
 
 @Component({
-  selector: "app-bar-chart",
+  selector: "app-line-chart",
   template: `
     <div>
-        <canvas class="chart" width="800" height="400" #barChart></canvas>
+        <canvas class="chart" width="800" height="400" #lineChart></canvas>
     </div>
   `
 })
-export class BarChartComponent implements OnChanges, AfterViewInit {
+export class LineChartComponent implements OnChanges, AfterViewInit {
   @Input() data: any;
   @Input() options: any;
 
-  @ViewChild("barChart") chart: ElementRef;
+  @ViewChild("lineChart") chart: ElementRef;
 
-  barChart: Chart;
+  lineChart: Chart;
 
   constructor() {}
 
@@ -36,25 +36,25 @@ export class BarChartComponent implements OnChanges, AfterViewInit {
   initChart() {
     const canvas: HTMLCanvasElement = this.chart.nativeElement;
     const ctx: CanvasRenderingContext2D = canvas.getContext("2d");
-    this.barChart = new Chart(ctx, {
-      type: "bar",
+    this.lineChart = new Chart(ctx, {
+      type: "line",
       data: this.data || [],
       options: this.options || {}
     });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (this.barChart == null) {
+    if (this.lineChart == null) {
       return;
     } else {
       if (changes.data != null && changes.data.currentValue != null) {
-        this.barChart.data = changes.data.currentValue;
-        this.barChart.update();
+        this.lineChart.data = changes.data.currentValue;
+        this.lineChart.update();
       }
 
       if (changes.options != null && changes.options.currentValue != null) {
-        this.barChart.options = changes.options.currentValue;
-        this.barChart.update();
+        this.lineChart.options = changes.options.currentValue;
+        this.lineChart.update();
       }
     }
   }
