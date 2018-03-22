@@ -70,8 +70,8 @@ export class EffortTdStatsComponent implements OnInit, OnChanges {
 
     //68–95–99.7 rule
     return result
-      .filter(item => item.x < this.weStats.mean + this.weStats.std)
-      .filter(item => item.y < this.tdStats.mean + this.tdStats.std);
+      .filter(item => Math.abs(item.x - this.weStats.mean) <= this.weStats.std)
+      .filter(item => Math.abs(item.y - this.tdStats.mean) <= this.tdStats.std);
   }
 
   createChart(data: any) {

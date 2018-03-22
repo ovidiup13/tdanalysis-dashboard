@@ -97,9 +97,20 @@ export class DataService {
    * technical debt data. Results are filtered by number of commits (>1).
    * @param repoId repository ID
    */
-  getTicketStats(repoId: string): Observable<IssueStats[]> {
+  getTicketStatsByCommit(repoId: string): Observable<IssueStats[]> {
     return this.http.get<IssueStats[]>(
-      `${DataService.API}/repos/${repoId}/stats/tickets`
+      `${DataService.API}/repos/${repoId}/stats/tickets/by-commit`
+    );
+  }
+
+  /**
+   * Returns stats for a specific repository. Includes work effort and
+   * technical debt data. Results are filtered by number of commits (>1).
+   * @param repoId repository ID
+   */
+  getTicketStatsByTicket(repoId: string): Observable<IssueStats[]> {
+    return this.http.get<IssueStats[]>(
+      `${DataService.API}/repos/${repoId}/stats/tickets/by-ticket`
     );
   }
 
