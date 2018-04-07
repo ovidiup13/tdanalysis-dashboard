@@ -10,27 +10,32 @@ import { Repository } from "../../models/repository.interface";
   selector: "app-repository-viewer",
   template: `
   <div class="page">
-    <h1 class="title">{{(repository$ | async)?.author + "/" + (repository$ | async)?.name}}</h1>
 
-    <div>
-      <h3 class="title">Repository Stats</h3>
-      <app-repo-stats [repository]="repository$ | async"></app-repo-stats>
-    </div>
+    <ng-container *ngIf="repository$ | async as repository">
+      <h1 class="title">{{repository.author + "/" + repository.name}}</h1>
+
+      <div>
+        <h3 class="title">Repository Stats</h3>
+        <app-repo-stats [repository]="repository"></app-repo-stats>
+      </div>
+    </ng-container>
 
     <div>
       <h3 class="title">Commit Stats</h3>
       <app-commit-stats class="chart" [data]="commitStats$ | async"></app-commit-stats>
     </div>
 
-    <div>
-      <h3 class="title">Issue Stats</h3>
-      <app-issue-stats class="chart" [issueStats]="issueStats$ | async"></app-issue-stats>
-    </div>
-    
-    <div>
-      <h3 class="title">Technical Debt Timeline</h3>
-      <app-td-stats class="chart" [data]="issueStats$ | async"></app-td-stats>
-    </div>
+    <ng-container *ngIf="issueStats$ | async as issueStats">
+      <div>
+        <h3 class="title">Issue Stats</h3>
+        <app-issue-stats class="chart" [issueStats]="issueStats"></app-issue-stats>
+      </div>
+      
+      <div>
+        <h3 class="title">Technical Debt Timeline</h3>
+        <app-td-stats class="chart" [data]="issueStats"></app-td-stats>
+      </div>
+    </ng-container>
 
     <div>
       <h3 class="title">Work Effort - Technical Debt By Commit Timestamps</h3>

@@ -35,6 +35,7 @@ export class TdStatsComponent implements OnChanges {
     const newData = changes.data.currentValue;
     if (newData != null) {
       this.dataset = this.processData(newData);
+      console.log(newData);
     }
   }
 
