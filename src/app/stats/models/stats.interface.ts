@@ -1,6 +1,8 @@
 export interface IssueStats {
   issueKey: string;
-  workEffort: number;
+  workEffort: {
+    hours: number;
+  };
   tdStats: TDStats;
   totalCommits: number;
   author: string;

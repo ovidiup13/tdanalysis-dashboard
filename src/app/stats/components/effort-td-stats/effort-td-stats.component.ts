@@ -12,6 +12,7 @@ import {
 import * as Chart from "chart.js";
 import { IssueStats, SimpleStats } from "../../models/stats.interface";
 import { StatsCalculator } from "../../helpers/stats-calculator";
+import { constants } from "../../helpers/constants";
 
 @Component({
   selector: "app-effort-td-stats",
@@ -22,97 +23,88 @@ import { StatsCalculator } from "../../helpers/stats-calculator";
       <h6>Mean: <b>{{weStats?.mean | number:'1.1-3'}} hours</b></h6>
       <h6>Standard deviation: <b>{{weStats?.std | number:'1.1-3'}} hours</b></h6>
     </div>
-    <canvas class="chart" width="800" height="400" #chart></canvas>
+    <app-scatter-chart [data]="dataset" [options]="options"></app-scatter-chart>
   </div>
   `
 })
-export class EffortTdStatsComponent implements OnInit, OnChanges {
+export class EffortTdStatsComponent implements OnChanges {
   @ViewChild("chart") chart: ElementRef;
 
   @Input() data: IssueStats[];
 
-  constructor() {}
-
   tdStats: SimpleStats;
   weStats: SimpleStats;
 
-  ngOnInit(): void {}
+  dataset: any;
+  options: any = {
+    responsive: true,
+    display: true,
+    scales: {
+      xAxes: [
+        {
+          scaleLabel: {
+            display: true,
+            labelString: "Work Effort (hours)"
+          },
+          type: "linear",
+          position: "bottom"
+        }
+      ],
+      yAxes: [
+        {
+          scaleLabel: {
+            display: true,
+            labelString: "Technical Debt (count)"
+          }
+        }
+      ]
+    }
+  };
+
+  constructor() {}
 
   ngOnChanges(changes: SimpleChanges): void {
     const dataChange = changes.data.currentValue;
     if (dataChange != null) {
-      console.log("Create a new chart from data", dataChange);
-      this.createChart(this.processData(dataChange));
+      this.dataset = this.processData(dataChange);
     }
   }
 
   processData(data: IssueStats[]) {
-    const result = data.map((stat: IssueStats) => {
-      return {
-        x: stat.workEffort,
-        y: stat.technicalDebt
-      };
-    });
+    // filter such that td is not null
+    data = data.filter(item => item.tdStats != null);
 
-    const we = result.map(i => i.x);
-    const we_mean = StatsCalculator.getMean(we);
-    this.weStats = {
-      mean: we_mean,
-      std: StatsCalculator.getStandardDeviation(we_mean, we)
-    };
+    // get total work effort
+    const workEffort = data.map(item => item.workEffort.hours);
 
-    const td = result.map(i => i.y);
-    const td_mean = StatsCalculator.getMean(td);
-    this.tdStats = {
-      mean: td_mean,
-      std: StatsCalculator.getStandardDeviation(td_mean, td)
-    };
+    // get technical debt by severity
+    const td = data.map(stat => stat.tdStats);
+    const added = StatsCalculator.joinData(td.map(t => t.added), workEffort);
+    const removed = StatsCalculator.joinData(
+      td.map(t => t.removed),
+      workEffort
+    );
+    const total = StatsCalculator.joinData(
+      td.map(t => t.totalPain),
+      workEffort
+    );
 
-    //68–95–99.7 rule
-    return result
-      .filter(item => Math.abs(item.x - this.weStats.mean) <= this.weStats.std)
-      .filter(item => Math.abs(item.y - this.tdStats.mean) <= this.tdStats.std);
-  }
+    console.log(added, removed, total);
 
-  createChart(data: any) {
-    const canvas: HTMLCanvasElement = this.chart.nativeElement;
-    const ctx: CanvasRenderingContext2D = canvas.getContext("2d");
-
-    const scatterChart = new Chart(ctx, {
-      type: "scatter",
-      data: {
-        datasets: [
-          {
-            label: "Work Effort - Technical Debt Scatter",
-            data: data,
-            backgroundColor: "#f48942"
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        display: true,
-        scales: {
-          xAxes: [
-            {
-              scaleLabel: {
-                display: true,
-                labelString: "Work Effort (hours)"
-              },
-              type: "linear",
-              position: "bottom"
-            }
-          ],
-          yAxes: [
-            {
-              scaleLabel: {
-                display: true,
-                labelString: "Technical Debt (count)"
-              }
-            }
-          ]
+    return {
+      datasets: [
+        { label: "Added", data: added, backgroundColor: constants.colors.red },
+        {
+          label: "Removed",
+          data: removed,
+          backgroundColor: constants.colors.green
+        },
+        {
+          label: "Total Pain",
+          data: total,
+          backgroundColor: constants.colors.blue
         }
-      }
-    });
+      ]
+    };
   }
 }

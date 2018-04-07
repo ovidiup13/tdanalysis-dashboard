@@ -7,6 +7,7 @@ import {
 } from "@angular/core";
 import { IssueStats, SimpleStats } from "../../models/stats.interface";
 import { StatsCalculator } from "../../helpers/stats-calculator";
+import { constants } from "../../helpers/constants";
 
 @Component({
   selector: "app-td-stats",
@@ -43,12 +44,13 @@ export class TdStatsComponent implements OnChanges {
 
     const labels = stats.map(issue => issue.issueKey);
     const td = stats.map(issue => issue.tdStats);
+    const all = td.map(t => t.totalPain);
 
-    // const td_mean = StatsCalculator.getMean(data);
-    // this.tdStats = {
-    //   mean: td_mean,
-    //   std: StatsCalculator.getStandardDeviation(td_mean, data)
-    // };
+    const td_mean = StatsCalculator.getMean(all);
+    this.tdStats = {
+      mean: td_mean,
+      std: StatsCalculator.getStandardDeviation(td_mean, all)
+    };
 
     const high = td.map(t => (t == null ? 0 : t.high));
     const medium = td.map(t => (t == null ? 0 : t.medium));
@@ -60,19 +62,19 @@ export class TdStatsComponent implements OnChanges {
         {
           label: "High Priority",
           data: high,
-          borderColor: "#FF4136",
+          borderColor: constants.colors.red,
           fill: false
         },
         {
           label: "Medium Priority",
           data: medium,
-          borderColor: "#FF851B",
+          borderColor: constants.colors.orange,
           fill: false
         },
         {
           label: "Low Priority",
           data: low,
-          borderColor: "#FFDC00",
+          borderColor: constants.colors.yellow,
           fill: false
         }
       ]

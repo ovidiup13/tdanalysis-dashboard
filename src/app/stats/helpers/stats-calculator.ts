@@ -10,4 +10,10 @@ export class StatsCalculator {
     );
     return Math.sqrt(variance / data.length);
   }
+
+  static joinData(td, workEffort) {
+    return td.map((elem, index) => {
+      return { x: workEffort[index], y: elem };
+    });
+  }
 }

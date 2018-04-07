@@ -51,7 +51,6 @@ export class IssueStatsComponent implements OnChanges {
   ngOnInit() {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
     const dataChanges = changes.issueStats.currentValue;
     if (dataChanges != null) {
       this.issueData = this.processData(dataChanges);
@@ -59,19 +58,13 @@ export class IssueStatsComponent implements OnChanges {
   }
 
   private processData(stats: IssueStats[]) {
-    console.log(stats);
-
     const labels = ["1 commit", "2-5 commits", "5-10 commits", "10+ commits"];
 
     const single = stats.filter(stat => stat.totalCommits === 1).length;
 
-    console.log("Number of issues with a single commit: ", single);
-
     const double = stats.filter(
       stat => stat.totalCommits >= 2 && stat.totalCommits < 5
     ).length;
-
-    console.log("Number of issues with 2-5 commits: ", double);
 
     const triple = stats.filter(
       stat => stat.totalCommits >= 5 && stat.totalCommits < 10
