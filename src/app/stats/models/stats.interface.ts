@@ -1,9 +1,18 @@
 export interface IssueStats {
   issueKey: string;
   workEffort: number;
-  technicalDebt: number;
+  tdStats: TDStats;
   totalCommits: number;
   author: string;
+}
+
+export interface TDStats {
+  added: number;
+  removed: number;
+  totalPain: number;
+  high: number;
+  medium: number;
+  low: number;
 }
 
 export interface CommitStats {
