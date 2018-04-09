@@ -1,4 +1,14 @@
+import { SimpleStats } from "../models/stats.interface";
+
 export class StatsCalculator {
+  static computeStats(data: number[]): SimpleStats {
+    const mean = StatsCalculator.getMean(data);
+    return {
+      mean: mean,
+      std: StatsCalculator.getStandardDeviation(mean, data)
+    };
+  }
+
   static getMean(data: number[]): number {
     return data.reduce((n1, n2) => n1 + n2, 0) / data.length;
   }
