@@ -13,6 +13,7 @@ import * as Chart from "chart.js";
 import { IssueStats, SimpleStats } from "../../models/stats.interface";
 import { StatsCalculator } from "../../helpers/stats-calculator";
 import { constants } from "../../helpers/constants";
+import { StaticSymbol } from "@angular/compiler";
 
 @Component({
   selector: "app-changeset-stats",
@@ -64,28 +65,30 @@ export class ChangesetStatsComponent implements OnChanges {
     // filter such that td is not null
     data = data.filter(item => item.tdStats != null);
 
+    console.log(data.length);
+
     // get technical debt by severity
-    const td = data.map(stat => stat.tdStats);
-    const totalTD = td.map(t => t.totalPain);
+    let td = data.map(stat => stat.tdStats);
+    let totalTD = td.map(t => t.totalPain);
 
     // get change set by added, deleted, modified and total
     const changeSets = data.map(stat => stat.changeSetStats);
 
     const additions = StatsCalculator.joinData(
-      changeSets.map(change => change.additions),
-      totalTD
+      totalTD,
+      changeSets.map(change => change.additions)
     );
     const deletions = StatsCalculator.joinData(
-      changeSets.map(change => change.deletions),
-      totalTD
+      totalTD,
+      changeSets.map(change => change.deletions)
     );
     const modifications = StatsCalculator.joinData(
-      changeSets.map(change => change.modifications),
-      totalTD
+      totalTD,
+      changeSets.map(change => change.modifications)
     );
     const total = StatsCalculator.joinData(
-      changeSets.map(change => change.totalChanges),
-      totalTD
+      totalTD,
+      changeSets.map(change => change.totalChanges)
     );
 
     return {
