@@ -5,7 +5,15 @@ export interface IssueStats {
   };
   tdStats: TDStats;
   totalCommits: number;
+  changeSetStats: ChangeSetStats;
   author: string;
+}
+
+export interface ChangeSetStats {
+  totalChanges: number;
+  additions: number;
+  deletions: number;
+  modifications: number;
 }
 
 export interface TDStats {

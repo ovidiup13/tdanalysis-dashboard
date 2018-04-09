@@ -33,8 +33,6 @@ interface Stats {
   `
 })
 export class EffortTdStatsComponent implements OnChanges {
-  @ViewChild("chart") chart: ElementRef;
-
   @Input() data: IssueStats[];
 
   stats: Stats[] = [];
@@ -119,11 +117,6 @@ export class EffortTdStatsComponent implements OnChanges {
       title: "Total Technical Debt Stats",
       stats: StatsCalculator.computeStats(totalTD)
     });
-
-    // // compute stats
-    // this.addedStats = StatsCalculator.computeStats(addedTD);
-    // this.removedStats = StatsCalculator.computeStats(removedTD);
-    // this.totalStats = StatsCalculator.computeStats(totalTD);
 
     // update work effort
     workEffort = data.map(item => item.workEffort.hours);

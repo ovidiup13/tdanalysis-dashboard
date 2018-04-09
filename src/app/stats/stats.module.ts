@@ -17,6 +17,7 @@ import { CommitStatsComponent } from "./components/commit-stats/commit-stats.com
 import { IssueStatsComponent } from "./components/issue-stats/issue-stats.component";
 import { TdStatsComponent } from "./components/td-stats/td-stats.component";
 import { RepoStatsComponent } from './components/repo-stats/repo-stats.component';
+import { ChangesetStatsComponent } from './components/changeset-stats/changeset-stats.component';
 
 const routes: Routes = [
   {
@@ -44,7 +45,8 @@ const routes: Routes = [
     CommitStatsComponent,
     IssueStatsComponent,
     TdStatsComponent,
-    RepoStatsComponent
+    RepoStatsComponent,
+    ChangesetStatsComponent
   ],
   providers: [DataService]
 })

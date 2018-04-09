@@ -35,6 +35,11 @@ import { Repository } from "../../models/repository.interface";
         <h3 class="title">Technical Debt Timeline</h3>
         <app-td-stats class="chart" [data]="issueStats"></app-td-stats>
       </div>
+
+      <div>
+        <h3 class="title">Change Sets - Technical Debt</h3>
+        <app-changeset-stats class="chart" [data]="issueStats"></app-changeset-stats>
+      </div>
     </ng-container>
 
     <div>
