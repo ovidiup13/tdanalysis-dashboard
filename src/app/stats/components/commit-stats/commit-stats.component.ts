@@ -18,7 +18,7 @@ import { CommitStats } from "../../models/stats.interface";
         <h6><b>{{data?.meanTicketsPerCommit | number:'1.1-3'}}</b> tickets referenced per commit</h6>
         <h6><b>{{data?.meanTDItemsPerCommit | number:'1.1-3'}}</b> TD items per commit</h6>
       </div>
-      <app-bar-chart [data]="dataset" [options]="chartOptions"></app-bar-chart>
+      <app-chart [data]="dataset" [options]="chartOptions" [chartType]="'bar'"></app-chart>
     </div>
   `,
   styleUrls: ["./commit-stats.component.css"]

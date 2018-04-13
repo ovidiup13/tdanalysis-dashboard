@@ -18,7 +18,7 @@ import { constants } from "../../helpers/constants";
         <h6>Mean: <b>{{tdStats?.mean | number:'1.1-3'}} TD items</b></h6>
         <h6>Standard deviation: <b>{{tdStats?.std | number:'1.1-3'}} TD items</b></h6>
       </div>      
-      <app-line-chart [data]="dataset" [options]="options"></app-line-chart>
+      <app-chart [data]="dataset" [options]="options" [chartType]="'line'"></app-chart>
     </div>
   `
 })

@@ -19,7 +19,7 @@ import { StaticSymbol } from "@angular/compiler";
   selector: "app-changeset-stats",
   template: `
     <div>
-      <app-scatter-chart [data]="dataset" [options]="options"></app-scatter-chart>
+      <app-chart [data]="dataset" [options]="options" [chartType]="'scatter'"></app-chart>
     </div>
   `
 })

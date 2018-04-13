@@ -11,7 +11,7 @@ import { IssueStats } from "../../models/stats.interface";
   selector: "app-issue-stats",
   template: `
     <div>
-      <app-bar-chart [data]="issueData" [options]="options"></app-bar-chart>
+      <app-chart [data]="issueData" [options]="options" [chartType]="'bar'"></app-chart>
     </div>
   `
 })

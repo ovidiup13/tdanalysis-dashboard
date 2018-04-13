@@ -12,18 +12,19 @@ import {
 import * as Chart from "chart.js";
 
 @Component({
-  selector: "app-scatter-chart",
+  selector: "app-chart",
   template: `
   <div>
-    <canvas class="chart" width="800" height="400" #scatterChart></canvas>  
+    <canvas class="chart" width="800" height="400" #chart></canvas>  
   </div>
   `
 })
-export class ScatterChartComponent implements OnChanges, AfterViewInit {
+export class ChartComponent implements OnChanges, AfterViewInit {
   @Input() data: any;
   @Input() options: any;
+  @Input() chartType: string;
 
-  @ViewChild("scatterChart") chart: ElementRef;
+  @ViewChild("chart") chart: ElementRef;
 
   scatterChart: Chart;
 
@@ -33,17 +34,19 @@ export class ScatterChartComponent implements OnChanges, AfterViewInit {
     const canvas: HTMLCanvasElement = this.chart.nativeElement;
     const ctx: CanvasRenderingContext2D = canvas.getContext("2d");
     this.scatterChart = new Chart(ctx, {
-      type: "scatter",
+      type: this.chartType,
       data: this.data || [],
       options: this.options || {}
     });
   }
 
   ngAfterViewInit(): void {
+    console.log("viewinit");
     this.initChart();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    console.log("changes");
     if (this.scatterChart == null) {
       return;
     } else {

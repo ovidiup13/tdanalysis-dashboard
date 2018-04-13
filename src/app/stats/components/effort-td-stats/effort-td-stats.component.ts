@@ -29,7 +29,7 @@ interface Stats {
       <h6>Mean: <b>{{stat.stats?.mean | number:'1.1-3'}} {{stat.metric}}</b></h6>
       <h6>Standard deviation: <b>{{stat.stats?.std | number:'1.1-3'}} {{stat.metric}}</b></h6>
     </div>
-    <app-scatter-chart [data]="dataset" [options]="options"></app-scatter-chart>
+    <app-chart [data]="dataset" [options]="options" [chartType]="'scatter'"></app-chart>
   </div>
   `
 })
