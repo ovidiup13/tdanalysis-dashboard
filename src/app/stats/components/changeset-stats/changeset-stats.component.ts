@@ -10,7 +10,11 @@ import {
 } from "@angular/core";
 
 import * as Chart from "chart.js";
-import { IssueStats, SimpleStats } from "../../models/stats.interface";
+import {
+  IssueStats,
+  SimpleStats,
+  ChangeTD
+} from "../../models/stats.interface";
 import { StatsCalculator } from "../../helpers/stats-calculator";
 import { constants } from "../../helpers/constants";
 import { StaticSymbol } from "@angular/compiler";
@@ -24,7 +28,7 @@ import { StaticSymbol } from "@angular/compiler";
   `
 })
 export class ChangesetStatsComponent implements OnChanges {
-  @Input() data: IssueStats[];
+  @Input() data: ChangeTD[];
 
   constructor() {}
 
@@ -61,18 +65,18 @@ export class ChangesetStatsComponent implements OnChanges {
     }
   }
 
-  processData(data: IssueStats[]) {
+  processData(data: ChangeTD[]) {
     // filter such that td is not null
-    data = data.filter(item => item.tdStats != null);
+    data = data.filter(item => item.technicalDebt != null);
 
     console.log(data.length);
 
     // get technical debt by severity
-    let td = data.map(stat => stat.tdStats);
+    let td = data.map(stat => stat.technicalDebt);
     let totalTD = td.map(t => t.totalPain);
 
     // get change set by added, deleted, modified and total
-    const changeSets = data.map(stat => stat.changeSetStats);
+    const changeSets = data.map(stat => stat.changeSet);
 
     const additions = StatsCalculator.joinData(
       totalTD,

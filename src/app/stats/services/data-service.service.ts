@@ -9,7 +9,8 @@ import { Commit, CommitMap } from "../models/commit.interface";
 import {
   IssueStats,
   CommitStats,
-  TechnicalDebt
+  TechnicalDebt,
+  ChangeTD
 } from "../models/stats.interface";
 
 // env
@@ -146,6 +147,12 @@ export class DataService {
   getTechnicalDebtTimeline(repoId: string): Observable<TechnicalDebt[]> {
     return this.http.get<TechnicalDebt[]>(
       `${DataService.API}/repos/${repoId}/td/timeline`
+    );
+  }
+
+  getChangeSetTechnicalDebt(repoId: string): Observable<ChangeTD[]> {
+    return this.http.get<ChangeTD[]>(
+      `${DataService.API}/repos/${repoId}/td/changeset`
     );
   }
 }

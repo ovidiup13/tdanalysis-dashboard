@@ -5,7 +5,8 @@ import { Observable } from "rxjs/Observable";
 import {
   IssueStats,
   CommitStats,
-  TechnicalDebt
+  TechnicalDebt,
+  ChangeTD
 } from "../../models/stats.interface";
 import { switchMap } from "rxjs/operators";
 import { Repository } from "../../models/repository.interface";
@@ -41,10 +42,12 @@ import { Repository } from "../../models/repository.interface";
         <h3 class="title">Issue Stats</h3>
         <app-issue-stats class="chart" [issueStats]="issueStats"></app-issue-stats>
       </div>
+    </ng-container>
 
+    <ng-container *ngIf="changeTDs$ | async as changeTDs">
       <div>
         <h3 class="title">Change Sets - Technical Debt</h3>
-        <app-changeset-stats class="chart" [data]="issueStats"></app-changeset-stats>
+        <app-changeset-stats class="chart" [data]="changeTDs"></app-changeset-stats>
       </div>
     </ng-container>
 
@@ -77,6 +80,7 @@ export class RepositoryViewerComponent implements OnInit {
   repository$: Observable<Repository>;
 
   technicalDebt$: Observable<TechnicalDebt[]>;
+  changeTDs$: Observable<ChangeTD[]>;
 
   constructor(
     private router: Router,
@@ -96,6 +100,7 @@ export class RepositoryViewerComponent implements OnInit {
       this.technicalDebt$ = this.dataService.getTechnicalDebtTimeline(
         params.id
       );
+      this.changeTDs$ = this.dataService.getChangeSetTechnicalDebt(params.id);
       this.issueStats$ = this.dataService.getTicketStatsRaw(params.id);
       this.commitStats$ = this.dataService.getCommitStats(params.id);
     });

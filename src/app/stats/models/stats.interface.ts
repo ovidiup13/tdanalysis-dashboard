@@ -39,6 +39,11 @@ export interface SimpleStats {
   std: number;
 }
 
+export interface ChangeTD {
+  changeSet: ChangeSetStats;
+  technicalDebt: TDStats;
+}
+
 export interface TechnicalDebt {
   totalCount: number;
   highCount: number;
