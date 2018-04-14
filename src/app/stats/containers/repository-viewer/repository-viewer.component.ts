@@ -2,7 +2,11 @@ import { Component, OnInit } from "@angular/core";
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { DataService } from "../../services/data-service.service";
 import { Observable } from "rxjs/Observable";
-import { IssueStats, CommitStats } from "../../models/stats.interface";
+import {
+  IssueStats,
+  CommitStats,
+  TechnicalDebt
+} from "../../models/stats.interface";
 import { switchMap } from "rxjs/operators";
 import { Repository } from "../../models/repository.interface";
 
@@ -25,15 +29,17 @@ import { Repository } from "../../models/repository.interface";
       <app-commit-stats class="chart" [data]="commitStats$ | async"></app-commit-stats>
     </div>
 
+    <ng-container *ngIf="technicalDebt$ | async as technicalDebt">
+      <div>
+        <h3 class="title">Technical Debt Timeline</h3>
+        <app-td-stats class="chart" [data]="technicalDebt"></app-td-stats>
+      </div>
+    </ng-container>
+
     <ng-container *ngIf="issueStats$ | async as issueStats">
       <div>
         <h3 class="title">Issue Stats</h3>
         <app-issue-stats class="chart" [issueStats]="issueStats"></app-issue-stats>
-      </div>
-      
-      <div>
-        <h3 class="title">Technical Debt Timeline</h3>
-        <app-td-stats class="chart" [data]="issueStats"></app-td-stats>
       </div>
 
       <div>
@@ -70,6 +76,8 @@ export class RepositoryViewerComponent implements OnInit {
   commitStats$: Observable<CommitStats>;
   repository$: Observable<Repository>;
 
+  technicalDebt$: Observable<TechnicalDebt[]>;
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -83,6 +91,9 @@ export class RepositoryViewerComponent implements OnInit {
         params.id
       );
       this.workEffortDataByTicket$ = this.dataService.getTicketStatsByTicket(
+        params.id
+      );
+      this.technicalDebt$ = this.dataService.getTechnicalDebtTimeline(
         params.id
       );
       this.issueStats$ = this.dataService.getTicketStatsRaw(params.id);

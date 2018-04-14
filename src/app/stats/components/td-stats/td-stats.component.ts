@@ -5,7 +5,11 @@ import {
   OnChanges,
   SimpleChanges
 } from "@angular/core";
-import { IssueStats, SimpleStats } from "../../models/stats.interface";
+import {
+  IssueStats,
+  SimpleStats,
+  TechnicalDebt
+} from "../../models/stats.interface";
 import { StatsCalculator } from "../../helpers/stats-calculator";
 import { constants } from "../../helpers/constants";
 
@@ -23,7 +27,7 @@ import { constants } from "../../helpers/constants";
   `
 })
 export class TdStatsComponent implements OnChanges {
-  @Input() data: IssueStats[];
+  @Input() data: TechnicalDebt[];
 
   dataset: any;
   options: any;
@@ -39,22 +43,19 @@ export class TdStatsComponent implements OnChanges {
     }
   }
 
-  private processData(stats: IssueStats[]) {
-    stats = stats.filter(stat => stat.tdStats != null);
+  private processData(stats: TechnicalDebt[]) {
+    const all = stats.map(t => t.totalCount);
 
-    const labels = stats.map(issue => issue.issueKey);
-    const td = stats.map(issue => issue.tdStats);
-    const all = td.map(t => t.totalPain);
-
+    const labels = stats.map((v, index) => index);
     const td_mean = StatsCalculator.getMean(all);
     this.tdStats = {
       mean: td_mean,
       std: StatsCalculator.getStandardDeviation(td_mean, all)
     };
 
-    const high = td.map(t => (t == null ? 0 : t.high));
-    const medium = td.map(t => (t == null ? 0 : t.medium));
-    const low = td.map(t => (t == null ? 0 : t.low));
+    const high = stats.map(s => s.highCount);
+    const medium = stats.map(s => s.mediumCount);
+    const low = stats.map(s => s.lowCount);
 
     return {
       labels: labels,

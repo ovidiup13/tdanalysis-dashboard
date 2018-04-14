@@ -38,3 +38,10 @@ export interface SimpleStats {
   mean: number;
   std: number;
 }
+
+export interface TechnicalDebt {
+  totalCount: number;
+  highCount: number;
+  mediumCount: number;
+  lowCount: number;
+}

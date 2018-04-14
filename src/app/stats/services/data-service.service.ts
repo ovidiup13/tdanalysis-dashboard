@@ -4,12 +4,16 @@ import { Observable } from "rxjs/Observable";
 
 // models
 import { Repository } from "../models/repository.interface";
+import { Issue } from "../models/issue.interface";
+import { Commit, CommitMap } from "../models/commit.interface";
+import {
+  IssueStats,
+  CommitStats,
+  TechnicalDebt
+} from "../models/stats.interface";
 
 // env
 import { environment } from "../../../environments/environment.dev";
-import { Issue } from "../models/issue.interface";
-import { Commit, CommitMap } from "../models/commit.interface";
-import { IssueStats, CommitStats } from "../models/stats.interface";
 
 @Injectable()
 export class DataService {
@@ -132,6 +136,16 @@ export class DataService {
   getCommitStats(repoId: string): Observable<CommitStats> {
     return this.http.get<CommitStats>(
       `${DataService.API}/repos/${repoId}/stats/commits`
+    );
+  }
+
+  /**
+   * Retrieves a timeline of technical debt throughout the project evolution.
+   * @param repoId the repository ID
+   */
+  getTechnicalDebtTimeline(repoId: string): Observable<TechnicalDebt[]> {
+    return this.http.get<TechnicalDebt[]>(
+      `${DataService.API}/repos/${repoId}/td/timeline`
     );
   }
 }
