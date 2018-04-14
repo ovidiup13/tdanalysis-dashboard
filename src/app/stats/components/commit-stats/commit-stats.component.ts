@@ -7,6 +7,7 @@ import {
 } from "@angular/core";
 import { Repository } from "../../models/repository.interface";
 import { CommitStats } from "../../models/stats.interface";
+import { constants } from "../../helpers/constants";
 
 @Component({
   selector: "app-commit-stats",
@@ -18,7 +19,7 @@ import { CommitStats } from "../../models/stats.interface";
         <h6><b>{{data?.meanTicketsPerCommit | number:'1.1-3'}}</b> tickets referenced per commit</h6>
         <h6><b>{{data?.meanTDItemsPerCommit | number:'1.1-3'}}</b> TD items per commit</h6>
       </div>
-      <app-chart [data]="dataset" [options]="chartOptions" [chartType]="'bar'"></app-chart>
+      <app-chart [data]="dataset" [options]="chartOptions" [chartType]="'doughnut'"></app-chart>
     </div>
   `,
   styleUrls: ["./commit-stats.component.css"]
@@ -32,25 +33,6 @@ export class CommitStatsComponent implements OnChanges {
     title: {
       display: true,
       name: "Commits with and without issues"
-    },
-    scales: {
-      xAxes: [
-        {
-          display: true
-        }
-      ],
-      yAxes: [
-        {
-          display: true,
-          ticks: {
-            beginAtZero: true
-          },
-          scaleLabel: {
-            display: true,
-            labelString: "Number of commits"
-          }
-        }
-      ]
     }
   };
 
@@ -68,7 +50,13 @@ export class CommitStatsComponent implements OnChanges {
     const data = [stats.commitsWithIssues, stats.commitsWithoutIssues];
     return {
       labels: labels,
-      datasets: [{ label: "Commits", data: data, backgroundColor: "#f48942" }]
+      datasets: [
+        {
+          label: "Commits",
+          data: data,
+          backgroundColor: [constants.colors.green, constants.colors.red]
+        }
+      ]
     };
   }
 }
