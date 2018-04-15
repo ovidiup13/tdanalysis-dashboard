@@ -1,12 +1,19 @@
 export interface IssueStats {
   issueKey: string;
-  workEffort: {
-    hours: number;
-  };
+  workEffort: WorkEffort;
   tdStats: TDStats;
   totalCommits: number;
   changeSetStats: ChangeSetStats;
   author: string;
+}
+
+export interface CommitStats {
+  totalCommits: number;
+  commitsWithIssues: number;
+  commitsWithoutIssues: number;
+  numberOfAuthors: number;
+  meanTicketsPerCommit: number;
+  meanTDItemsPerCommit: number;
 }
 
 export interface ChangeSetStats {
@@ -25,15 +32,6 @@ export interface TDStats {
   low: number;
 }
 
-export interface CommitStats {
-  totalCommits: number;
-  commitsWithIssues: number;
-  commitsWithoutIssues: number;
-  numberOfAuthors: number;
-  meanTicketsPerCommit: number;
-  meanTDItemsPerCommit: number;
-}
-
 export interface SimpleStats {
   mean: number;
   std: number;
@@ -42,6 +40,15 @@ export interface SimpleStats {
 export interface ChangeTD {
   changeSet: ChangeSetStats;
   technicalDebt: TDStats;
+}
+
+export interface WorkTD {
+  workEffort: WorkEffort;
+  technicalDebt: TDStats;
+}
+
+export interface WorkEffort {
+  hours: number;
 }
 
 export interface TechnicalDebt {

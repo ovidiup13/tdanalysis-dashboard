@@ -10,7 +10,12 @@ import {
 } from "@angular/core";
 
 import * as Chart from "chart.js";
-import { IssueStats, SimpleStats, TDStats } from "../../models/stats.interface";
+import {
+  IssueStats,
+  SimpleStats,
+  TDStats,
+  WorkTD
+} from "../../models/stats.interface";
 import { StatsCalculator } from "../../helpers/stats-calculator";
 import { constants } from "../../helpers/constants";
 
@@ -34,7 +39,7 @@ interface Stats {
   `
 })
 export class EffortTdStatsComponent implements OnChanges {
-  @Input() data: IssueStats[];
+  @Input() data: WorkTD[];
 
   stats: Stats[] = [];
 
@@ -79,7 +84,7 @@ export class EffortTdStatsComponent implements OnChanges {
     }
   }
 
-  processData(data: IssueStats[]) {
+  processData(data: WorkTD[]) {
     // get total work effort
     let workEffort = data.map(item => item.workEffort.hours);
     const wes = StatsCalculator.computeStats(workEffort);
@@ -92,7 +97,7 @@ export class EffortTdStatsComponent implements OnChanges {
     // make sure work effort is within one standard deviation from the mean
     data = data
       .filter(item => item.workEffort.hours <= wes.mean + wes.std)
-      .filter(item => item.tdStats != null);
+      .filter(item => item.technicalDebt != null);
 
     const added = this.processDebt(data, {
       field: "added",
@@ -131,14 +136,14 @@ export class EffortTdStatsComponent implements OnChanges {
 
   calculateWorkEffort() {}
 
-  processDebt(data: IssueStats[], options: any) {
+  processDebt(data: WorkTD[], options: any) {
     // filter by greater than zero
-    const filtered = data.filter(d => d.tdStats[options.field] > 0);
+    const filtered = data.filter(d => d.technicalDebt[options.field] > 0);
     const workEffort = filtered.map(d => d.workEffort.hours);
-    const td = filtered.map(d => d.tdStats[options.field]);
+    const td = filtered.map(d => d.technicalDebt[options.field]);
 
     const tdStats = StatsCalculator.computeStats(
-      data.map(d => d.tdStats[options.field])
+      data.map(d => d.technicalDebt[options.field])
     );
 
     this.stats.push({

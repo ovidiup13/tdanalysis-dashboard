@@ -10,7 +10,8 @@ import {
   IssueStats,
   CommitStats,
   TechnicalDebt,
-  ChangeTD
+  ChangeTD,
+  WorkTD
 } from "../models/stats.interface";
 
 // env
@@ -153,6 +154,18 @@ export class DataService {
   getChangeSetTechnicalDebt(repoId: string): Observable<ChangeTD[]> {
     return this.http.get<ChangeTD[]>(
       `${DataService.API}/repos/${repoId}/td/changeset`
+    );
+  }
+
+  getWorkEffortTDByTicket(repoId: string): Observable<WorkTD[]> {
+    return this.http.get<WorkTD[]>(
+      `${DataService.API}/repos/${repoId}/td/ticket/work`
+    );
+  }
+
+  getWorkEffortTDByCommit(repoId: string): Observable<WorkTD[]> {
+    return this.http.get<WorkTD[]>(
+      `${DataService.API}/repos/${repoId}/td/commit/work`
     );
   }
 }
