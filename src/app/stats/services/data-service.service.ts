@@ -46,7 +46,7 @@ export class DataService {
    */
   getTicketStatsRaw(repoId: string): Observable<IssueStats[]> {
     return this.http.get<IssueStats[]>(
-      `${DataService.API}/repos/${repoId}/stats/tickets/raw`
+      `${DataService.API}/repos/${repoId}/stats/tickets`
     );
   }
 
@@ -78,13 +78,13 @@ export class DataService {
 
   getWorkEffortTDByTicket(repoId: string): Observable<WorkTD[]> {
     return this.http.get<WorkTD[]>(
-      `${DataService.API}/repos/${repoId}/td/ticket/work`
+      `${DataService.API}/repos/${repoId}/td/work/ticket`
     );
   }
 
   getWorkEffortTDByCommit(repoId: string): Observable<WorkTD[]> {
     return this.http.get<WorkTD[]>(
-      `${DataService.API}/repos/${repoId}/td/commit/work`
+      `${DataService.API}/repos/${repoId}/td/work/commit`
     );
   }
 }

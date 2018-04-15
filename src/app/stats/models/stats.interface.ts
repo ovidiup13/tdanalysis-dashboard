@@ -1,10 +1,8 @@
 export interface IssueStats {
   issueKey: string;
-  workEffort: WorkEffort;
-  tdStats: TDStats;
   totalCommits: number;
-  changeSetStats: ChangeSetStats;
   author: string;
+  status: string;
 }
 
 export interface CommitStats {
@@ -14,6 +12,8 @@ export interface CommitStats {
   numberOfAuthors: number;
   meanTicketsPerCommit: number;
   meanTDItemsPerCommit: number;
+  successfulBuilds: number;
+  failedBuilds: number;
 }
 
 export interface ChangeSetStats {
