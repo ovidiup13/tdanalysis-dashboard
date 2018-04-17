@@ -15,7 +15,7 @@ import * as Chart from "chart.js";
   selector: "app-chart",
   template: `
   <div>
-    <canvas class="chart" width="800" height="400" #chart></canvas>  
+    <canvas class="chart" width="auto" height="auto" #chart></canvas>  
   </div>
   `
 })

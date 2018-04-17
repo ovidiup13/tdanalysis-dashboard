@@ -78,22 +78,27 @@ export class ChangesetStatsComponent implements OnChanges {
     // get change set by added, deleted, modified and total
     const changeSets = data.map(stat => stat.changeSet);
 
-    const additions = StatsCalculator.joinData(
-      totalTD,
-      changeSets.map(change => change.additions)
-    );
-    const deletions = StatsCalculator.joinData(
-      totalTD,
-      changeSets.map(change => change.deletions)
-    );
-    const modifications = StatsCalculator.joinData(
-      totalTD,
-      changeSets.map(change => change.modifications)
-    );
-    const total = StatsCalculator.joinData(
-      totalTD,
-      changeSets.map(change => change.totalChanges)
-    );
+    const additions = this.processChanges(data, "additions");
+    const deletions = this.processChanges(data, "deletions");
+    const modifications = this.processChanges(data, "modifications");
+    const total = this.processChanges(data, "totalChanges");
+
+    // const additions = StatsCalculator.joinData(
+    //   totalTD,
+    //   changeSets.map(change => change.additions)
+    // );
+    // const deletions = StatsCalculator.joinData(
+    //   totalTD,
+    //   changeSets.map(change => change.deletions)
+    // );
+    // const modifications = StatsCalculator.joinData(
+    //   totalTD,
+    //   changeSets.map(change => change.modifications)
+    // );
+    // const total = StatsCalculator.joinData(
+    //   totalTD,
+    //   changeSets.map(change => change.totalChanges)
+    // );
 
     return {
       datasets: [
@@ -119,5 +124,18 @@ export class ChangesetStatsComponent implements OnChanges {
         }
       ]
     };
+  }
+
+  processChanges(data: ChangeTD[], field: string) {
+    let fieldData = data.map(change => change.changeSet[field]);
+    const stats = StatsCalculator.computeStats(fieldData);
+    const filtered = data.filter(
+      change => change.changeSet[field] <= stats.mean + stats.std
+    );
+
+    fieldData = filtered.map(stat => stat.changeSet[field]);
+    const totalTD = filtered.map(change => change.technicalDebt.totalPain);
+
+    return StatsCalculator.joinData(fieldData, totalTD);
   }
 }
